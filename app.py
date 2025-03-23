@@ -3,9 +3,16 @@
 app = Flask(__name__)
 
 pokemons = [
-    {"name": "Pikachu", "type": "Elétrico"},
-    {"name": "Charmander", "type": "Fogo"},
-    {"name": "Bulbasaur", "type": "Grama/Veneno"},
+    {"name": "Pikachu", "type": "Electric"},
+    {"name": "Charmander", "type": "Fire"},
+    {"name": "Bulbasaur", "type": "Grass/Poison"},
+    {"name": "Eevee", "type": "Grass"},
+    {"name": "Squirtle", "type": "Water"},
+    {"name": "Jigglypuff", "type": "Normal/Fairy"},
+    {"name": "Meowth", "type": "Normal"},
+    {"name": "Psyduck", "type": "Water"},
+    {"name": "Snorlax", "type": "Normal"},
+    {"name": "Gengar", "type": "Ghost/Poison"}
 ]
 
 MAX_PAGINATION_LIMIT = 5
@@ -26,6 +33,14 @@ def find_pokemon(pokemon_name):
         if pokemon["name"].lower() == pokemon_name.lower():
             return jsonify(pokemon)
     return jsonify({"error": "Pokémon not found"}), 404
+
+@app.route("/add", methods=["POST"])
+def add_pokemon():
+    new_pokemon = request.get_json()
+    if not new_pokemon or "name" not in new_pokemon or "type" not in new_pokemon:
+        return jsonify({"error": "Invalid Pokémon"}), 400
+    pokemons.append(new_pokemon)
+    return jsonify(new_pokemon), 201
 
 if __name__ == "__main__":
     app.run(debug=True)
