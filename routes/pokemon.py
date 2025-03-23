@@ -1,5 +1,6 @@
 ﻿from flask import Blueprint, jsonify, request
-from ..models import Pokemon
+from models import Pokemon
+
 pokemon_routes = Blueprint("pokemon_routes", __name__)
 
 MAX_PAGINATION_LIMIT = 5
